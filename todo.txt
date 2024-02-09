@@ -1,0 +1,8 @@
+- Stack swap
+- Stack push to stack
+- Stack rotate
+- Stack reverse rotate
+
+- swap both
+- rotate both
+- reverse rotate both
