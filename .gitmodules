@@ -1,3 +1,0 @@
-[submodule "libs/libs/libft"]
-	path = libs/libs/libft
-	url = git@github.com:Ariouz/42-libft.git
