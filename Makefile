@@ -7,12 +7,18 @@ LIBFT_A= $(LIBFT_DIR)/libft.a
 
 SRCS= push_swap.c \
 stack.c \
-stack_operation.c
+stack_operation.c \
+sort.c \
+stack_utils.c \
+stack_functions.c \
+node_utils.c \
+a_node_utils.c \
+b_node_utils.c
 
 OBJS = $(SRCS:.c=.o)
 
 $(NAME): libft $(OBJS)
-	gcc $(FLAGS) $(OBJS) $(LIBFT_A) -o $(NAME)
+	gcc -g $(FLAGS) $(OBJS) $(LIBFT_A) -o $(NAME)
 
 %.o: %.c
 	gcc $(FLAGS) -c $< -o $@ -I.

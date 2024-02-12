@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vicalvez <vicalvez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vicalvez <vicalvez@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 10:05:26 by vicalvez          #+#    #+#             */
-/*   Updated: 2024/02/09 12:42:10 by vicalvez         ###   ########.fr       */
+/*   Updated: 2024/02/12 20:50:23 by vicalvez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,102 +14,42 @@
 
 int main()
 {
-    t_stack *head;
+    t_stack *stack_a;
+    t_stack *stack_b;
+    stack_b = NULL;
 
-    head = create_stack(5);
-    push(&head, create_stack(2));
-    push(&head, create_stack(8));
-    push(&head, create_stack(4));
-    push(&head, create_stack(1));
+    stack_a = create_stack(11, NULL);
+    push(&stack_a, create_stack(4, &stack_a));
+    push(&stack_a, create_stack(6, &stack_a));
+    push(&stack_a, create_stack(7, &stack_a));
+    push(&stack_a, create_stack(1, &stack_a));
+    print_stack(stack_a);
     
-    t_stack *cursor = head;
-    while (cursor)
-    {
-        ft_printf("stack element: %d\n", get_value(cursor));
-        cursor = cursor->next;
-    }
+    ft_printf("\npush_swap \n");
+    push_swap(&stack_a, &stack_b);
 
-    ft_printf("\nremoved top stack element: %d\n", pop(&head));
-    cursor = head;
-    while (cursor)
-    {
-        ft_printf("A: stack element: %d\n", get_value(cursor));
-        cursor = cursor->next;
-    }
-
-    swap(head);
-    ft_printf("\nswap 1-2 stack element\n");
-    cursor = head;
-    while (cursor)
-    {
-        ft_printf("A: stack element: %d\n", get_value(cursor));
-        cursor = cursor->next;
-    }
-
-    t_stack *b = NULL;
+    ft_printf("\nStack a \n");
+    print_stack(stack_a);
+    ft_printf("\nStack b \n");
+    print_stack(stack_b);
     
-    ft_printf("\npush a to b\n");
-    push_to(&head, &b);
-    cursor = head;
-    while (cursor)
-    {
-        ft_printf("A: stack element: %d\n", get_value(cursor));
-        cursor = cursor->next;
-    }
-
-    cursor = b;
-    while (cursor)
-    {
-        ft_printf("\nB: stack element: %d\n", get_value(cursor));
-        cursor = cursor->next;
-    }
-
-    ft_printf("\nrotate\n");
-    rotate(&head);
-    cursor = head;
-    while (cursor)
-    {
-        ft_printf("A: stack element: %d\n", get_value(cursor));
-        cursor = cursor->next;
-    }
-
-    ft_printf("\nreverse rotate\n");
-    reverse_rotate(&head);
-    cursor = head;
-    while (cursor)
-    {
-        ft_printf("A: stack element: %d\n", get_value(cursor));
-        cursor = cursor->next;
-    }
-
-    ft_printf("\npush b to a\n");
-    push_to(&b, &head);
-    cursor = head;
-    while (cursor)
-    {
-        ft_printf("A: stack element: %d\n", get_value(cursor));
-        cursor = cursor->next;
-    }
-
-    cursor = b;
-    while (cursor)
-    {
-        ft_printf("\nB: stack element: %d\n", get_value(cursor));
-        cursor = cursor->next;
-    }
-    
-    //cleanup(head);
+    cleanup(stack_a);
+    cleanup(stack_b);
+    free(stack_b);
     return (0);
 }
 
-void    cleanup(t_stack *head)
+void    cleanup(t_stack *stack)
 {
         t_stack *cursor;
+        t_stack *tmp;
 
-        cursor = head;
+        cursor = stack;
         while (cursor)
         {
-            
-            cursor = cursor->next;
+            free(cursor->content);
+            tmp = cursor->next;
+            free(cursor);
+            cursor = tmp;
         }
 }

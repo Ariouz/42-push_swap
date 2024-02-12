@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
+/*   stack_functions.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vicalvez <vicalvez@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/08 11:16:11 by vicalvez          #+#    #+#             */
-/*   Updated: 2024/02/12 11:08:40 by vicalvez         ###   ########.fr       */
+/*   Created: 2024/02/12 20:11:46 by vicalvez          #+#    #+#             */
+/*   Updated: 2024/02/12 20:23:30 by vicalvez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "push_swap.h"
 
-t_list	*ft_lstnew(void *content)
+
+// ROTATE BOTH
+void    rr(t_stack **stack_a, t_stack **stack_b)
 {
-	t_list	*element;
+    rotate(stack_a, 0, 'a');
+    rotate(stack_b, 0, 'b');
+    ft_printf("rr\n");
+}
 
-	element = (t_list *)malloc(sizeof(t_list));
-	if (!element)
-		return (NULL);
-	element->content = content;
-	element->next = NULL;
-	return (element);
+// REVERSE ROTATE BOTH
+void    rrr(t_stack **stack_a, t_stack **stack_b)
+{
+    reverse_rotate(stack_a, 0, 'a');
+    reverse_rotate(stack_b, 0, 'b');
+    ft_printf("rrr\n");
 }

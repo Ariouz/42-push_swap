@@ -6,3 +6,22 @@
 - swap both
 - rotate both
 - reverse rotate both
+- 
+- sort 3 @done
+- sort 5 @done
+- sort 100
+- sort 500
+- 
+- init stack from argv
+-
+- argv parsing
+- error handling
+- duplicate
+- argc >= 2*
+- empty input
+- not number
+- only + - sign and digit
+- is integer MAX MIN
+- 
+- 
+- leaks
