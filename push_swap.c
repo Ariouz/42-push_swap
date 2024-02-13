@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vicalvez <vicalvez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vicalvez <vicalvez@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 10:05:26 by vicalvez          #+#    #+#             */
-/*   Updated: 2024/02/13 11:38:17 by vicalvez         ###   ########.fr       */
+/*   Updated: 2024/02/13 13:56:41 by vicalvez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,20 @@ int main()
     t_stack *stack_b;
     stack_b = NULL;
 
-    stack_a = create_stack(0, NULL);
+    stack_a = create_stack(10, NULL);
 
     (void) stack_b;
-    push(&stack_a, create_stack(9, &stack_a));
-    push(&stack_a, create_stack(-6, &stack_a));
+    push(&stack_a, create_stack(5, &stack_a));
+    push(&stack_a, create_stack(42, &stack_a));
+    push(&stack_a, create_stack(100, &stack_a));
+    push(&stack_a, create_stack(0, &stack_a));
     push(&stack_a, create_stack(70, &stack_a));
     push(&stack_a, create_stack(1, &stack_a));
     push(&stack_a, create_stack(4, &stack_a));
+    push(&stack_a, create_stack(9, &stack_a));
+    push(&stack_a, create_stack(-15, &stack_a));
+    push(&stack_a, create_stack(-14, &stack_a));
+    push(&stack_a, create_stack(24, &stack_a));
     
     push_swap(&stack_a, &stack_b);
     

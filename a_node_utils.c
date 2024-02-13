@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   a_node_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vicalvez <vicalvez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vicalvez <vicalvez@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 19:15:57 by vicalvez          #+#    #+#             */
-/*   Updated: 2024/02/13 11:43:55 by vicalvez         ###   ########.fr       */
+/*   Updated: 2024/02/13 13:55:54 by vicalvez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,10 @@ void    update_target_node_a(t_stack *stack_a, t_stack *stack_b)
             b_cursor = b_cursor->next;
         }
         if (best_target == LONG_MIN)
+        {
+            ft_printf("stack b size %d\n", get_stack_size(stack_b));
             a_data->target_node = get_max_node(stack_b);
+        }
         else
             a_data->target_node = target_node;
         stack_a = stack_a->next;
@@ -61,6 +64,8 @@ void    update_cost_a(t_stack *stack_a, t_stack *stack_b)
 
     size_a = get_stack_size(stack_a);
     size_b = get_stack_size(stack_b);
+    if (!stack_a)
+        return ;
     while (stack_a)
     {
         data = (t_stack_data *) stack_a->content;
@@ -88,13 +93,13 @@ void    push_a_to_b(t_stack **stack_a, t_stack **stack_b)
         reverse_rotate_both(stack_a, stack_b, cheapest);
     prepare_push(stack_a, cheapest, 'a');
     prepare_push(stack_b, cheapest_data->target_node, 'b');
-    push_to(stack_b, stack_a, 1, 'b');
+    push_to(stack_a, stack_b, 1, 'b');
 }
 
 void    push_b_to_a(t_stack **stack_a, t_stack **stack_b)
 {
     prepare_push(stack_a, ((t_stack_data *)(*stack_b)->content)->target_node, 'a');
-    push_to(stack_a, stack_b, 1, 'a');
+    push_to(stack_a, stack_b, 1, 'b');
 }
 
 void    rotate_both(t_stack **stack_a, t_stack **stack_b, t_stack *cheapest)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sort.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vicalvez <vicalvez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vicalvez <vicalvez@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 10:30:16 by vicalvez          #+#    #+#             */
-/*   Updated: 2024/02/13 11:46:11 by vicalvez         ###   ########.fr       */
+/*   Updated: 2024/02/13 13:56:54 by vicalvez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,19 +39,14 @@ void    sort(t_stack **stack_a, t_stack **stack_b)
     if (stack_size_a-- > 3 && !is_stack_sorted(*stack_a))
         push_to(stack_a, stack_b, 1, 'b');
     
-    while (stack_size_a-- != 3 && !is_stack_sorted(*stack_a))
+    while (stack_size_a-- > 3 && !is_stack_sorted(*stack_a))
     {
         update_nodes_a(*stack_a, *stack_b);
         push_a_to_b(stack_a, stack_b);
     }
     sort_three(stack_a);
 
-    ft_printf("\n\nA\n\n");
-    print_stack(*stack_a);
-    ft_printf("\n\nB\n\n");
-    print_stack(*stack_b);
-
-    while ((*stack_b))
+    while (*stack_b)
     {
         update_nodes_b(*stack_a, *stack_b);
         prepare_push(stack_a, ((t_stack_data *)(*stack_b)->content)->target_node, 'a');

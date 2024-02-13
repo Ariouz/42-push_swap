@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   node_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vicalvez <vicalvez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vicalvez <vicalvez@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 19:55:58 by vicalvez          #+#    #+#             */
-/*   Updated: 2024/02/13 11:44:50 by vicalvez         ###   ########.fr       */
+/*   Updated: 2024/02/13 13:35:24 by vicalvez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,13 @@ void    prepare_push(t_stack **stack, t_stack *top, char c)
     data = (t_stack_data *) (*stack)->content;
     while (data->value != top_data->value)
     {
-        data = (t_stack_data *) (*stack)->content;
-        //ft_printf("stack %c data val %d, top val %d\n", c, data->value, top_data->value);
-        if (top_data->above_median)
+        ft_printf("stack %c data val %d, top val %d\n", c, data->value, top_data->value);
+        if (top_data->above_median == 1)
             rotate(stack, 1, c);
         else
             reverse_rotate(stack, 1, c);
+        data = (t_stack_data *) (*stack)->content;
+        top_data = (t_stack_data *) top->content;
     }
 }
 

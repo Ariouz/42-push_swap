@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stack_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vicalvez <vicalvez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vicalvez <vicalvez@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 10:40:14 by vicalvez          #+#    #+#             */
-/*   Updated: 2024/02/13 11:07:43 by vicalvez         ###   ########.fr       */
+/*   Updated: 2024/02/13 13:50:05 by vicalvez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,17 +83,23 @@ t_stack *get_max_node(t_stack *node)
     t_stack *next;
     t_stack *max;
     t_stack_data    *data;
+    long    max_value;
 
     next = node;
-    data = (t_stack_data *) next->content;
     max = next;
+    max_value = LONG_MIN;
+    ft_printf("stack size %d\n", get_stack_size(node));
     while (next)
     {
         data = (t_stack_data *) next->content;
-        if (data->value > ((t_stack_data *) max->content)->value)
+        if (data->value > max_value)
+        {
+            max_value = get_value(next);
             max = next;
+        }
         next = next->next;
     }
+    ft_printf("is max null: %d\n", max == NULL ? 1 : 5);
     return (max);
 }
 
