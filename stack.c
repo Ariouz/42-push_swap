@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stack.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vicalvez <vicalvez@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: vicalvez <vicalvez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:06:07 by vicalvez          #+#    #+#             */
-/*   Updated: 2024/02/12 19:59:14 by vicalvez         ###   ########.fr       */
+/*   Updated: 2024/02/13 11:39:24 by vicalvez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ t_stack	*create_stack(int val, t_stack **stack)
 	stack_data->previous = NULL;
 	stack_data->cheapest = 0;
 	node = ft_lstnew(stack_data);
-	if (*stack)
+	if (stack)
 	{
 		last = get_last_node(stack);
-		last->next = node;
-		stack_data->previous = last;
+		if (last)
+			((t_stack_data *) last->content)->previous = node;
 	}
 	return (node);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stack_operation.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vicalvez <vicalvez@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: vicalvez <vicalvez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 12:01:05 by vicalvez          #+#    #+#             */
-/*   Updated: 2024/02/12 20:41:50 by vicalvez         ###   ########.fr       */
+/*   Updated: 2024/02/13 11:07:37 by vicalvez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,21 +38,29 @@ void    rotate(t_stack **stack, int rotate, char c)
 {
     t_stack *tmp;
     
-    tmp = create_stack(pop(stack), stack);
-    ft_lstadd_back(stack, tmp);
     if (rotate == 1)
         ft_printf("r%c\n", c);
+
+    tmp = *stack;
+    *stack = (*stack)->next;
+    get_last_node(stack)->next = tmp;
+    tmp->next = NULL;
 }
 
 void    reverse_rotate(t_stack **stack, int print, char c)
 {
     t_stack *tmp;
 
-    tmp = create_stack(get_value(ft_lstlast(*stack)), stack);
-    remove_last(stack);
-    push(stack, tmp);
     if (print == 1)
         ft_printf("rr%c\n", c);
+        
+    tmp = get_last_node(stack);
+    ft_lstadd_front(stack, tmp);
+
+    tmp = (*stack)->next;
+    while (tmp->next != *stack)
+        tmp = tmp->next;
+    tmp->next = NULL;
 }
 
 void    remove_last(t_stack **stack)

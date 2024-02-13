@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   node_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vicalvez <vicalvez@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: vicalvez <vicalvez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 19:55:58 by vicalvez          #+#    #+#             */
-/*   Updated: 2024/02/12 20:49:35 by vicalvez         ###   ########.fr       */
+/*   Updated: 2024/02/13 11:44:50 by vicalvez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,21 +45,21 @@ void    update_cheapest(t_stack *stack)
     cheapest = LONG_MAX;
     while (stack)
     {
-        if (((t_stack_data *) stack)->push_cost < cheapest)
+        if (((t_stack_data *) stack->content)->push_cost < cheapest)
         {
-            cheapest = ((t_stack_data *) stack)->push_cost;
+            cheapest = ((t_stack_data *) stack->content)->push_cost;
             node = stack;
         }
         stack = stack->next;
     }
-    ((t_stack_data *) node)->cheapest = 1;
+    ((t_stack_data *) node->content)->cheapest = 1;
 }
 
 t_stack *get_cheapest(t_stack *stack)
 {
     while (stack)
     {
-        if (((t_stack_data *)stack)->cheapest == 1)
+        if (((t_stack_data *)stack->content)->cheapest == 1)
             return stack;
         stack = stack->next;
     }
@@ -68,9 +68,16 @@ t_stack *get_cheapest(t_stack *stack)
 
 void    prepare_push(t_stack **stack, t_stack *top, char c)
 {
-    while (*stack != top)
+    t_stack_data     *data;
+    t_stack_data     *top_data;
+
+    top_data = (t_stack_data *) top->content;
+    data = (t_stack_data *) (*stack)->content;
+    while (data->value != top_data->value)
     {
-        if (((t_stack_data *)top)->above_median)
+        data = (t_stack_data *) (*stack)->content;
+        //ft_printf("stack %c data val %d, top val %d\n", c, data->value, top_data->value);
+        if (top_data->above_median)
             rotate(stack, 1, c);
         else
             reverse_rotate(stack, 1, c);
@@ -79,9 +86,9 @@ void    prepare_push(t_stack **stack, t_stack *top, char c)
 
 void    set_min_on_top(t_stack **stack)
 {
-    while (((t_stack_data *)*stack)->value != ((t_stack_data *)get_min_node(*stack))->value)
+    while (((t_stack_data *)(*stack)->content)->value != ((t_stack_data *)get_min_node(*stack)->content)->value)
     {
-        if (((t_stack_data *)get_min_node(*stack))->above_median)
+        if (((t_stack_data *)get_min_node(*stack)->content)->above_median)
             rotate(stack, 1, 'a');
         else
             reverse_rotate(stack, 1, 'a');

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   a_node_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vicalvez <vicalvez@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: vicalvez <vicalvez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 19:15:57 by vicalvez          #+#    #+#             */
-/*   Updated: 2024/02/12 20:47:33 by vicalvez         ###   ########.fr       */
+/*   Updated: 2024/02/13 11:43:55 by vicalvez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 void    update_nodes_a(t_stack *stack_a, t_stack *stack_b)
 {
+    ft_printf("update node a\n");
     update_index(stack_a);
     update_index(stack_b);
     update_target_node_a(stack_a, stack_b);
     update_cost_a(stack_a, stack_b);
     update_cheapest(stack_a);
 }
-
 
 void    update_target_node_a(t_stack *stack_a, t_stack *stack_b)
 {
@@ -67,10 +67,10 @@ void    update_cost_a(t_stack *stack_a, t_stack *stack_b)
         data->push_cost = data->index;
         if (data->above_median == 0)
             data->push_cost = size_a - data->index;
-        if (((t_stack_data *) data->target_node)->above_median == 1)
-            data->push_cost += ((t_stack_data *) data->target_node)->index;
+        if (((t_stack_data *) data->target_node->content)->above_median == 1)
+            data->push_cost += ((t_stack_data *) data->target_node->content)->index;
         else
-            data->push_cost += size_b - ((t_stack_data *) data->target_node)->index;
+            data->push_cost += size_b - ((t_stack_data *) data->target_node->content)->index;
         stack_a = stack_a->next;
     }
 }
@@ -82,12 +82,12 @@ void    push_a_to_b(t_stack **stack_a, t_stack **stack_b)
 
     cheapest = get_cheapest(*stack_a);
     cheapest_data = (t_stack_data *)cheapest->content;
-    if (cheapest_data->above_median && ((t_stack_data *)cheapest_data->target_node)->above_median)
+    if (cheapest_data->above_median == 1 && ((t_stack_data *)cheapest_data->target_node->content)->above_median == 1)
         rotate_both(stack_a, stack_b, cheapest);
-    else if (cheapest_data->above_median == 0 && ((t_stack_data *)cheapest_data->target_node)->above_median == 0)
+    else if (cheapest_data->above_median == 0 && ((t_stack_data *)cheapest_data->target_node->content)->above_median == 0)
         reverse_rotate_both(stack_a, stack_b, cheapest);
     prepare_push(stack_a, cheapest, 'a');
-    prepare_push(stack_b, cheapest, 'b');
+    prepare_push(stack_b, cheapest_data->target_node, 'b');
     push_to(stack_b, stack_a, 1, 'b');
 }
 
@@ -99,8 +99,21 @@ void    push_b_to_a(t_stack **stack_a, t_stack **stack_b)
 
 void    rotate_both(t_stack **stack_a, t_stack **stack_b, t_stack *cheapest)
 {
-    while (*stack_b != ((t_stack_data *) cheapest)->target_node && *stack_a != cheapest)
+    t_stack_data    *b_data;
+    t_stack_data    *a_data;
+    t_stack_data    *cheap_data;
+    t_stack_data    *target_data;
+    
+    a_data = (t_stack_data *) (*stack_a)->content;
+    b_data = (t_stack_data *) (*stack_b)->content;
+    cheap_data = (t_stack_data *) cheapest->content;
+    target_data = ((t_stack_data *) cheap_data->target_node->content);
+    while (b_data->value != target_data->value && a_data->value != cheap_data->value)
+    {
         rr(stack_a, stack_b);
+        b_data = (t_stack_data *) (*stack_b)->content;
+        a_data  = (t_stack_data *) (*stack_a)->content;
+    }
     update_index(*stack_a);
     update_index(*stack_b);
 }

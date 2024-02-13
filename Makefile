@@ -21,7 +21,7 @@ $(NAME): libft $(OBJS)
 	gcc -g $(FLAGS) $(OBJS) $(LIBFT_A) -o $(NAME)
 
 %.o: %.c
-	gcc $(FLAGS) -c $< -o $@ -I.
+	gcc -g $(FLAGS) -c $< -o $@ -I.
 
 test:
 	make $(NAME)

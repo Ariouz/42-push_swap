@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stack_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vicalvez <vicalvez@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: vicalvez <vicalvez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 10:40:14 by vicalvez          #+#    #+#             */
-/*   Updated: 2024/02/12 20:44:42 by vicalvez         ###   ########.fr       */
+/*   Updated: 2024/02/13 11:07:43 by vicalvez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,16 @@ int get_min(t_stack *stack)
 t_stack *get_last_node(t_stack **stack)
 {
     t_stack *head;
-    t_stack *next;
+    t_stack *last;
 
     head = *stack;
-    next = head;
-    while (next->next->next)
-        next = next->next;
-    return (next);
+    last = head;
+    while (head)
+    {
+        last = head;
+        head = head->next;
+    }
+    return (last);
 }
 
 int is_stack_sorted(t_stack *stack)
